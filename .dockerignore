@@ -1,0 +1,10 @@
+.github/
+.venv/
+.vscode/
+build/
+data/
+tests/
+.coveragerc
+.editorconfig
+CHANGELOG.md
+LICENSE
