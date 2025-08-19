@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.0 (2025-08-19)
+
+
+### Features
+
+* create skid ([c901574](https://github.com/agrc/firearm-safe-harbor-skid/commit/c901574f197034068a8a279c59afe7b8a6c48c5c))
+
 ## 1.0.0 (2025-07-30)
 
 
