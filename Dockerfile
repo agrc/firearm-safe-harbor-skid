@@ -21,16 +21,20 @@ RUN apt-get update && \
 # Install uv
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
+# Set up uv cache directory with proper permissions
+ENV UV_CACHE_DIR=/tmp/uv-cache
+RUN mkdir -p /tmp/uv-cache && chmod 777 /tmp/uv-cache
+
 # Copy dependency files for better layer caching
 COPY pyproject.toml uv.lock ./
 
-# Install dependencies without cache to avoid permission issues
-RUN uv sync --frozen --no-install-project --no-dev --no-cache
+# Install dependencies into cache (this layer will be cached by Docker)
+RUN uv sync --frozen --no-install-project --no-dev
 
-# Copy source code and install project
+# Copy source code and install project (using cached dependencies)
 COPY . /app
 WORKDIR /app
-RUN uv sync --frozen --no-dev --no-cache && \
+RUN uv sync --frozen --no-dev && \
     chown -R dummy:dummy /app
 
 USER dummy
