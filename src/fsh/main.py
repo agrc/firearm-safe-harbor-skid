@@ -6,6 +6,8 @@ Run the firearm safe harbor script
 
 import json
 import logging
+import os
+import socket
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -256,6 +258,10 @@ def process():
         loader.truncate_and_load(df)
 
         end = datetime.now()
+        service = os.environ.get("K_SERVICE") or os.environ.get("GAE_SERVICE") or socket.gethostname()
+        project = (
+            os.environ.get("GOOGLE_CLOUD_PROJECT") or os.environ.get("GCP_PROJECT") or os.environ.get("PROJECT_ID")
+        )
 
         summary_message = MessageDetails()
         summary_message.subject = f"{config.SKID_NAME} Update Summary"
@@ -263,6 +269,8 @@ def process():
             f"{config.SKID_NAME} update {start.strftime('%Y-%m-%d')}",
             "=" * 20,
             "",
+            f"Service: {service}",
+            f"Project: {project}",
             f"Start time: {start.strftime('%H:%M:%S')}",
             f"End time: {end.strftime('%H:%M:%S')}",
             f"Duration: {str(end - start)}",
