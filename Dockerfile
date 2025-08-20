@@ -4,9 +4,7 @@ FROM python:3.11-slim
 ENV PYTHONUNBUFFERED=True
 
 USER root
-RUN useradd -s /bin/bash dummy && \
-    mkdir -p /home/dummy/.cache && \
-    chown -R dummy:dummy /home/dummy
+RUN useradd -s /bin/bash dummy
 
 # Install system dependencies and set locale
 RUN apt-get update && \
@@ -21,21 +19,22 @@ RUN apt-get update && \
 # Install uv
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
-# Set up uv cache directory with proper permissions
-ENV UV_CACHE_DIR=/tmp/uv-cache
-RUN mkdir -p /tmp/uv-cache && chmod 777 /tmp/uv-cache
-
 # Copy dependency files for better layer caching
 COPY pyproject.toml uv.lock ./
 
-# Install dependencies into cache (this layer will be cached by Docker)
-RUN uv sync --frozen --no-install-project --no-dev
+# Install dependencies (no cache to avoid permission issues)
+RUN uv sync --frozen --no-install-project --no-dev --no-cache
 
-# Copy source code and install project (using cached dependencies)
+# Copy source code and install project
 COPY . /app
 WORKDIR /app
-RUN uv sync --frozen --no-dev && \
+RUN uv sync --frozen --no-dev --no-cache && \
     chown -R dummy:dummy /app
 
+# Set UV environment variables to prevent cache usage at runtime
+ENV UV_NO_CACHE=1
+ENV UV_CACHE_DIR=/tmp
+ENV PATH="/app/.venv/bin:$PATH"
+
 USER dummy
-ENTRYPOINT ["uv", "run", "fsh"]
+ENTRYPOINT ["python", "-m", "fsh.main"]
