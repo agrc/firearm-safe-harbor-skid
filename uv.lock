@@ -1,9 +1,8 @@
 version = 1
-requires-python = ">=3.11, <4"
+requires-python = ">=3.11.0, <3.12"
 resolution-markers = [
-    "python_full_version < '3.12'",
-    "python_full_version == '3.12.*'",
-    "python_full_version >= '3.13'",
+    "python_version < '0'",
+    "python_version < '0'",
 ]
 
 [[package]]
@@ -488,7 +487,7 @@ dependencies = [
     { name = "click" },
     { name = "cloudpickle" },
     { name = "fsspec" },
-    { name = "importlib-metadata", marker = "python_full_version < '3.12'" },
+    { name = "importlib-metadata" },
     { name = "packaging" },
     { name = "partd" },
     { name = "pyyaml" },
@@ -624,7 +623,7 @@ requires-dist = [
     { name = "pytest-ruff", marker = "extra == 'tests'", specifier = "==0.*" },
     { name = "pytest-watch", marker = "extra == 'tests'", specifier = "==4.*" },
     { name = "ruff", marker = "extra == 'tests'", specifier = "==0.*" },
-    { name = "ugrc-palletjack", specifier = "==5.2.*" },
+    { name = "ugrc-palletjack", specifier = "==5.2.6" },
     { name = "ugrc-supervisor", specifier = "==3.2.*" },
 ]
 
@@ -830,7 +829,7 @@ name = "importlib-metadata"
 version = "8.7.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "zipp", marker = "python_full_version < '3.12'" },
+    { name = "zipp" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/76/66/650a33bd90f786193e4de4b3ad86ea60b53c89b669a5c7be931fac31cdb0/importlib_metadata-8.7.0.tar.gz", hash = "sha256:d13b81ad223b890aa16c5471f2ac3056cf76c5f10f82d6f9292f0b415f389000", size = 56641 }
 wheels = [
@@ -863,7 +862,7 @@ name = "jaraco-context"
 version = "6.0.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "backports-tarfile", marker = "python_full_version < '3.12'" },
+    { name = "backports-tarfile" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/df/ad/f3777b81bf0b6e7bc7514a1656d3e637b2e8e15fab2ce3235730b3e7a4e6/jaraco_context-6.0.1.tar.gz", hash = "sha256:9bae4ea555cf0b14938dc0aee7c9f32ed303aa20a3b73e7dc80111628792d1b3", size = 13912 }
 wheels = [
@@ -896,7 +895,7 @@ name = "keyring"
 version = "25.6.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "importlib-metadata", marker = "python_full_version < '3.12'" },
+    { name = "importlib-metadata" },
     { name = "jaraco-classes" },
     { name = "jaraco-context" },
     { name = "jaraco-functools" },
@@ -2165,7 +2164,7 @@ name = "sqlalchemy"
 version = "2.0.43"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "greenlet", marker = "(python_full_version < '3.14' and platform_machine == 'AMD64') or (python_full_version < '3.14' and platform_machine == 'WIN32') or (python_full_version < '3.14' and platform_machine == 'aarch64') or (python_full_version < '3.14' and platform_machine == 'amd64') or (python_full_version < '3.14' and platform_machine == 'ppc64le') or (python_full_version < '3.14' and platform_machine == 'win32') or (python_full_version < '3.14' and platform_machine == 'x86_64')" },
+    { name = "greenlet", marker = "platform_machine == 'AMD64' or platform_machine == 'WIN32' or platform_machine == 'aarch64' or platform_machine == 'amd64' or platform_machine == 'ppc64le' or platform_machine == 'win32' or platform_machine == 'x86_64'" },
     { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d7/bc/d59b5d97d27229b0e009bd9098cd81af71c2fa5549c580a0a67b9bed0496/sqlalchemy-2.0.43.tar.gz", hash = "sha256:788bfcef6787a7764169cfe9859fe425bf44559619e1d9f56f5bddf2ebf6f417", size = 9762949 }
@@ -2312,7 +2311,7 @@ wheels = [
 
 [[package]]
 name = "ugrc-palletjack"
-version = "5.2.5"
+version = "5.2.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "arcgis" },
@@ -2325,9 +2324,9 @@ dependencies = [
     { name = "pysftp" },
     { name = "sqlalchemy" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/bc/08/36151a7ef88f4a0f82a57a7d55e69e2f6d5be9a741e1821e12a45d8a25de/ugrc_palletjack-5.2.5.tar.gz", hash = "sha256:dd9c5d6449908541e73818979f1ef0e63a5edba25490a42c309e1680444ca359", size = 71535 }
+sdist = { url = "https://files.pythonhosted.org/packages/34/0c/62c220e84138b7de8893aaf49ba6386609660a91441a313ad54bf79bccc3/ugrc_palletjack-5.2.6.tar.gz", hash = "sha256:2d72008b625dcd493b4feddaf54f7e7835d0ae7556a243fcb6bfe62f7ddeb9d1", size = 71753 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d2/12/6714e8afcd5df32f136067cf9f73f6609417c136c18ce6e2418d3098924e/ugrc_palletjack-5.2.5-py3-none-any.whl", hash = "sha256:51ad74ae3e29bcb5b10dfd3ae82f601da4b2758d654960ba653411acdef827a1", size = 44484 },
+    { url = "https://files.pythonhosted.org/packages/17/0e/0a94aa461611bf07dd02ededc55e0af31b6f06a4dfd563662439766ec359/ugrc_palletjack-5.2.6-py3-none-any.whl", hash = "sha256:8837a7e0a34023bced8d5fef30c3028d6b12b5b91eea733b18e6fb633d41531e", size = 44573 },
 ]
 
 [[package]]
