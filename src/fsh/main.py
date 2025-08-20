@@ -12,6 +12,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from types import SimpleNamespace
 
+import google_auth_httplib2
 import httplib2
 import pandas as pd
 from arcgis.gis import GIS
@@ -127,9 +128,10 @@ def _load_sheet_to_dataframe(spreadsheet_id: str, worksheet_index: int = 0, incl
 
     credentials, _ = google_auth_default(scopes=["https://www.googleapis.com/auth/spreadsheets.readonly"])
 
-    # Create HTTP client with timeout to avoid httplib2 warning
+    # Create HTTP client with timeout and apply credentials to it
     http = httplib2.Http(timeout=60)
-    service = build("sheets", "v4", credentials=credentials, http=http)
+    authed_http = google_auth_httplib2.AuthorizedHttp(credentials, http=http)
+    service = build("sheets", "v4", http=authed_http)
 
     meta = service.spreadsheets().get(spreadsheetId=spreadsheet_id).execute()
     sheets = meta.get("sheets", [])
