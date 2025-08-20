@@ -201,7 +201,7 @@ def process():
         )
 
         total_rows = len(df)
-        module_logger.debug("Total rows found in sheet: %d", total_rows)
+        module_logger.debug("total rows in sheet: %d", total_rows)
 
         if config.PARTICIPATION_COLUMN not in df.columns:
             module_logger.warning(
@@ -216,13 +216,13 @@ def process():
             df = df[df[config.PARTICIPATION_COLUMN].fillna("").astype(str).str.strip().str.upper() == "Y"]
 
             participating_rows = len(df)
-            module_logger.info("%d locations are participating", participating_rows)
+            module_logger.info("locations participating: %d", participating_rows)
 
         df[["X", "Y"]] = df[["X", "Y"]].apply(pd.to_numeric, errors="coerce")
         df = df.dropna(subset=["X", "Y"])
 
         valid_rows = len(df)
-        module_logger.info("%d valid locations are participating", valid_rows)
+        module_logger.info("valid locations participating: %d", valid_rows)
 
         df = df.drop(columns=[config.PARTICIPATION_COLUMN], errors="ignore")
         df = df.rename(
