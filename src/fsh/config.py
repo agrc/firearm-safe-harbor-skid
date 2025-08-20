@@ -11,7 +11,7 @@ AGOL_ORG = "https://utah.maps.arcgis.com"
 SENDGRID_SETTINGS = {
     "from_address": "noreply@utah.gov",
     "to_addresses": "ugrc-developers@utah.gov",
-    "prefix": f"f{SKID_NAME} on {socket.gethostname()}: ",
+    "prefix": f"{SKID_NAME} on {socket.gethostname()}: ",
 }
 LOG_LEVEL = logging.DEBUG
 LOG_FILE_NAME = "log"
