@@ -193,6 +193,7 @@ def process():
 
         skid_supervisor = _initialize(log_path, secrets.SENDGRID_API_KEY)
         module_logger = logging.getLogger(config.SKID_NAME)
+        module_logger.info("starting %s version %s", config.SKID_NAME, version.__version__)
 
         df = _load_sheet_to_dataframe(
             secrets.GOOGLE_SHEET_ID,
