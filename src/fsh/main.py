@@ -14,13 +14,10 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from types import SimpleNamespace
 
-import google_auth_httplib2
-import httplib2
 import pandas as pd
 from arcgis.gis import GIS
 from google.auth import default as google_auth_default
-from googleapiclient.discovery import build
-from palletjack import load
+from palletjack import extract, load
 from supervisor.message_handlers import SendGridHandler
 from supervisor.models import MessageDetails, Supervisor
 
@@ -29,8 +26,8 @@ from supervisor.models import MessageDetails, Supervisor
 try:
     from . import config, version
 except ImportError:
-    import config
-    import version
+    import config  # pyright: ignore[reportMissingImports]
+    import version  # pyright: ignore[reportMissingImports]
 
 
 def _get_secrets():
@@ -106,86 +103,6 @@ def _initialize(log_path, sendgrid_api_key):
     return skid_supervisor
 
 
-def _load_sheet_to_dataframe(spreadsheet_id: str, worksheet_index: int = 0, include_columns=None, exclude_columns=None):
-    """Load a Google Sheets worksheet into a pandas.DataFrame using Application Default Credentials.
-
-    Args:
-        spreadsheet_id: The Google Sheets spreadsheet id.
-        worksheet_index: Zero-based worksheet index to load.
-
-        include_columns: optional list of header names to keep (applies after reading header)
-        exclude_columns: optional list of header names to drop
-
-    Returns:
-        pandas.DataFrame
-
-    Raises:
-        RuntimeError: if required libraries are not installed.
-    """
-
-    if google_auth_default is None or build is None or pd is None:
-        raise RuntimeError(
-            "google-auth, google-api-python-client and pandas are required to load Google Sheets; install them in your venv"
-        )
-
-    credentials, _ = google_auth_default(scopes=["https://www.googleapis.com/auth/spreadsheets.readonly"])
-
-    # Create HTTP client with timeout and apply credentials to it
-    http = httplib2.Http(timeout=60)
-    authed_http = google_auth_httplib2.AuthorizedHttp(credentials, http=http)
-    service = build("sheets", "v4", http=authed_http)
-
-    meta = service.spreadsheets().get(spreadsheetId=spreadsheet_id).execute()
-    sheets = meta.get("sheets", [])
-
-    if not sheets:
-        return pd.DataFrame()
-
-    if worksheet_index < 0 or worksheet_index >= len(sheets):
-        raise IndexError(f"Worksheet index {worksheet_index} out of range (found {len(sheets)} sheets)")
-
-    title = sheets[worksheet_index]["properties"]["title"]
-
-    sheet = service.spreadsheets().values().get(spreadsheetId=spreadsheet_id, range=title).execute()
-    values = sheet.get("values", [])
-    if not values:
-        return pd.DataFrame()
-
-    # Normalize row lengths and construct DataFrame using first row as header
-    max_cols = max(len(r) for r in values)
-    rows = [r + [""] * (max_cols - len(r)) for r in values]
-    header = rows[0]
-    data_rows = rows[1:]
-
-    # Normalize headers and build DataFrame
-    header = [h.strip() if isinstance(h, str) else h for h in header]
-    df = pd.DataFrame(data_rows, columns=header)
-
-    # Trim whitespace in all string/object columns
-    str_cols = df.select_dtypes(include="object").columns
-    if len(str_cols):
-        df[str_cols] = df[str_cols].apply(lambda s: s.str.strip())
-
-    # Normalize common empty tokens to real missing values
-    na_tokens = [""]
-    df.replace(na_tokens, pd.NA, inplace=True)
-    # Catch whitespace-only strings if any slipped through
-    df.replace(r"^\s*$", pd.NA, regex=True, inplace=True)
-
-    # If caller requested only a subset of columns, apply include/exclude by header name
-    if include_columns:
-        # keep only headers that exist in the sheet and in the include list, preserving order
-        include_set = set(include_columns)
-        keep = [h for h in header if h in include_set]
-        df = df[keep]
-    elif exclude_columns:
-        drop = [h for h in header if h in (exclude_columns or []) and h in header]
-        if drop:
-            df = df.drop(columns=drop)
-
-    return df
-
-
 def process():
     """The main function that does all the work."""
 
@@ -203,11 +120,9 @@ def process():
         module_logger = logging.getLogger(config.SKID_NAME)
         module_logger.info("starting %s version %s", config.SKID_NAME, version.__version__)
 
-        df = _load_sheet_to_dataframe(
-            secrets.GOOGLE_SHEET_ID,
-            worksheet_index=0,
-            include_columns=config.COLUMNS,
-        )
+        credentials, _ = google_auth_default()
+        loader = extract.GSheetLoader(credentials)
+        df = loader.load_specific_worksheet_into_dataframe(secrets.GOOGLE_SHEET_ID, worksheet=0)
 
         total_rows = len(df)
         module_logger.debug("total rows in sheet: %d", total_rows)
@@ -226,6 +141,12 @@ def process():
 
             participating_rows = len(df)
             module_logger.info("locations participating: %d", participating_rows)
+
+        if config.COLUMNS:
+            # keep only headers that exist in the sheet and in the include list, preserving order
+            include_set = set(config.COLUMNS)
+            keep = [h for h in df if h in include_set]
+            df = df[keep]
 
         df[["X", "Y"]] = df[["X", "Y"]].apply(pd.to_numeric, errors="coerce")
         df = df.dropna(subset=["X", "Y"])
@@ -250,7 +171,7 @@ def process():
             }
         )
 
-        df = pd.DataFrame.spatial.from_xy(df, "longitude", "latitude", sr=4326)
+        df = pd.DataFrame.spatial.from_xy(df, "longitude", "latitude", sr=4326)  # pyright: ignore[reportAttributeAccessIssue]
 
         gis = GIS(config.AGOL_ORG, secrets.AGOL_USERNAME, secrets.AGOL_PASSWORD)
 
