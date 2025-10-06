@@ -178,6 +178,8 @@ def process():
                 df[col] = df[col].apply(lambda x: x.strip() if isinstance(x, str) else x)
                 df[col] = df[col].replace("", None)
 
+        df["phone_url"] = df["phone"].apply(lambda x: f"tel:{x}" if pd.notna(x) and str(x).strip() != "" else "")
+
         df = pd.DataFrame.spatial.from_xy(df, "longitude", "latitude", sr=4326)  # pyright: ignore[reportAttributeAccessIssue]
 
         gis = GIS(config.AGOL_ORG, secrets.AGOL_USERNAME, secrets.AGOL_PASSWORD)
