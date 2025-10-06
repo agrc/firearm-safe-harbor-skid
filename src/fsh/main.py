@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # * coding: utf8 *
 """
-Run the firearm safe harbor script
+Run the firearm safe harbor skid
 """
 
 import json
@@ -170,6 +170,13 @@ def process():
                 "Y": "latitude",
             }
         )
+
+        # Trim whitespace and convert empty strings to None for
+        columns_to_clean = ["phone", "email", "hours", "notes", "address2", "website"]
+        for col in columns_to_clean:
+            if col in df.columns:
+                df[col] = df[col].apply(lambda x: x.strip() if isinstance(x, str) else x)
+                df[col] = df[col].replace("", None)
 
         df = pd.DataFrame.spatial.from_xy(df, "longitude", "latitude", sr=4326)  # pyright: ignore[reportAttributeAccessIssue]
 
