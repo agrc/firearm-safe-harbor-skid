@@ -158,14 +158,14 @@ def process():
         df = df.rename(
             columns={
                 "NAME": "name",
-                "FSH Phone": "phone",
-                "FSH Email": "email",
-                "FSH Availability": "hours",
-                "FSH Notes": "notes",
-                "TELEPHONE": "phone_other",
+                "PHONE": "phone",
+                "EMAIL": "email",
+                "FSH AVAILABILITY": "hours",
+                "FSH NOTES": "notes",
                 "ADDRESS": "address",
                 "ADDRESS2": "address2",
-                "Web Address": "url",
+                "WEBSITE": "website",
+                "GOOGLE": "url",
                 "X": "longitude",
                 "Y": "latitude",
             }
