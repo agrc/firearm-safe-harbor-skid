@@ -162,7 +162,7 @@ def process():
                 "EMAIL": "email",
                 "FSH AVAILABILITY": "hours",
                 "FSH NOTES": "notes",
-                "ADDRESS": "address",
+                "FULL_ADDRESS": "address",
                 "ADDRESS2": "address2",
                 "WEBSITE": "website",
                 "GOOGLE": "url",
