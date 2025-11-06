@@ -171,15 +171,14 @@ def process():
             }
         )
 
-        # Trim whitespace and convert empty strings to None for
+        # Trim whitespace and convert empty strings to None for columns_to_clean
         columns_to_clean = ["phone", "email", "hours", "notes", "address2", "website"]
         for col in columns_to_clean:
             if col in df.columns:
                 df[col] = df[col].apply(lambda x: x.strip() if isinstance(x, str) else x)
                 df[col] = df[col].replace("", None)
 
-        df["phone_url"] = df["phone"].apply(lambda x: f"tel:{x}" if pd.notna(x) and str(x).strip() != "" else "")
-
+        df["phone_url"] = df["phone"].apply(lambda x: f"tel:{x}" if pd.notna(x) else "")
         df = pd.DataFrame.spatial.from_xy(df, "longitude", "latitude", sr=4326)  # pyright: ignore[reportAttributeAccessIssue]
 
         gis = GIS(config.AGOL_ORG, secrets.AGOL_USERNAME, secrets.AGOL_PASSWORD)
