@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.0.0](https://github.com/agrc/firearm-safe-harbor-skid/compare/v1.0.0...v1.0.0) (2025-11-06)
+
+
+### Features
+
+* add phone url ([acf1fa6](https://github.com/agrc/firearm-safe-harbor-skid/commit/acf1fa6ff16650b9e6b04cd8aaa29f41207bf10c))
+* create skid ([c901574](https://github.com/agrc/firearm-safe-harbor-skid/commit/c901574f197034068a8a279c59afe7b8a6c48c5c))
+
+
+### Bug Fixes
+
+* respond to spreadsheet schema change ([9bc6f47](https://github.com/agrc/firearm-safe-harbor-skid/commit/9bc6f4742bc3ce5d66dcda7740ae47176dc08356))
+* update sheet client creation ([2e5b2ef](https://github.com/agrc/firearm-safe-harbor-skid/commit/2e5b2ef9211b813d2d4d993afa413e84dd04bc2f))
+
+
+### Dependencies
+
+* fix empty geometry bug with palletjack update ([4cd2f7a](https://github.com/agrc/firearm-safe-harbor-skid/commit/4cd2f7adcddaeb211d3c0318807b878980d8aa2f))
+* update lockfile ([a0ee449](https://github.com/agrc/firearm-safe-harbor-skid/commit/a0ee44949596360d1dce490a23087c832d582f40))
+* update packages ([2093957](https://github.com/agrc/firearm-safe-harbor-skid/commit/2093957655add87b58424634a25e845949243b83))
+* update pytest-cov requirement from ==6.* to ==7.* ([0711896](https://github.com/agrc/firearm-safe-harbor-skid/commit/0711896885e106c0df64142f480c5bc183a4bc9b))
+
+
+### Documentation
+
+* add developer notes ([1d91b6b](https://github.com/agrc/firearm-safe-harbor-skid/commit/1d91b6ba0dc8582241e56fcd01fabc498a27b388))
+
 ## 1.0.0 (2025-08-19)
 
 
