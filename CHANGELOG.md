@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/agrc/firearm-safe-harbor-skid/compare/v1.0.0...v1.0.1) (2025-11-17)
+
+
+### Bug Fixes
+
+* correct vpc during deploy ([c3eae45](https://github.com/agrc/firearm-safe-harbor-skid/commit/c3eae4576aeed413ab1d0ba78cd57144d0f187f1))
+
 ## [1.0.0](https://github.com/agrc/firearm-safe-harbor-skid/compare/v1.0.0...v1.0.0) (2025-11-06)
 
 
