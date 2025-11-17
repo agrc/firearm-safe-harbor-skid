@@ -27,8 +27,8 @@ jobs:
           identity_provider: ${{ secrets.IDENTITY_PROVIDER }}
           service_account_email: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          shared_vpc_network: ${{ vars.UGRC_SHARED_VPC_NETWORK_DEV }}
-          shared_vpc_subnet: ${{ vars.UGRC_SHARED_VPC_SUBNET_WEST_DEV }}
+          shared_vpc_network: ${{ vars.UGRC_SHARED_VPC_NETWORK_PROD }}
+          shared_vpc_subnet: ${{ vars.UGRC_SHARED_VPC_SUBNET_WEST_PROD }}
 
   notify:
     name: Notify issues
