@@ -24,6 +24,11 @@ This skid is executed on demand by BCI employees with access managed by a Google
    - `mv src/fsh/secrets/secrets.template.json src/fsh/secrets/secrets.json`
 
 1. Populate secrets
+
+1. Test skid
+
+   `uv run pytest`
+
 1. Run skid
 
    `uv run fsh`
