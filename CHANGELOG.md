@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.0.2](https://github.com/agrc/firearm-safe-harbor-skid/compare/v1.0.1...v1.0.2) (2026-02-11)
+
+
+### Dependencies
+
+* bump ugrc-palletjack in the safe-dependencies group ([2c691b4](https://github.com/agrc/firearm-safe-harbor-skid/commit/2c691b430613d20913913ce8d16d4a0f49321069))
+* **dev:** update pytest requirement from ==8.* to ==9.* ([aedc573](https://github.com/agrc/firearm-safe-harbor-skid/commit/aedc5739279cb9cab088bb1a93061bc9c2127182))
+* sync dependency lock file ([38b727f](https://github.com/agrc/firearm-safe-harbor-skid/commit/38b727fbe52475b8daf78cab7a2f0053730e894c))
+
+
+### Documentation
+
+* add testing command ([d485d8e](https://github.com/agrc/firearm-safe-harbor-skid/commit/d485d8ec520ade6a17682d1de64fb6ef15ed3e2b))
+
 ## [1.0.1](https://github.com/agrc/firearm-safe-harbor-skid/compare/v1.0.0...v1.0.1) (2025-11-17)
 
 
