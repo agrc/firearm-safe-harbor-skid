@@ -7,7 +7,7 @@ name = "fsh"
 dynamic = ["version"]
 description = "A skid to manage firearm safe harbor storage locations in Utah."
 readme = "README.md"
-requires-python = "~=3.11.0"
+requires-python = "~=3.13.0"
 license = { text = "MIT" }
 authors = [{ name = "UGRC", email = "ugrc-developers@utah.gov" }]
 keywords = ["gis"]
