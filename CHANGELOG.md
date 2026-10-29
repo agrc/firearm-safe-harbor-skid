@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.3](https://github.com/agrc/firearm-safe-harbor-skid/compare/v1.0.2...v1.0.3) (2026-10-29)
+
+
+### Dependencies
+
+* bump ugrc-palletjack from 5.2.12 to 6.1.1 in the major-dependencies group across 1 directory ([#20](https://github.com/agrc/firearm-safe-harbor-skid/issues/20)) ([d787583](https://github.com/agrc/firearm-safe-harbor-skid/commit/d78758394665752e1223f144bab310de4fa90c4d))
+* update ugrc-supervisor requirement from ==3.2.* to ==3.3.* ([c8ba2eb](https://github.com/agrc/firearm-safe-harbor-skid/commit/c8ba2eb7fa43c91fde883d345d81d97620d41adc))
+
 ## [1.0.2](https://github.com/agrc/firearm-safe-harbor-skid/compare/v1.0.1...v1.0.2) (2026-02-11)
 
 
